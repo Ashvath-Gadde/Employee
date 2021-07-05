@@ -2,6 +2,9 @@ package com.employeeDetails.demo.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,6 +33,7 @@ public class EmployeeController {
         	return employees;
     }
  
+    		
     // To get employee by id 
     		
     		@GetMapping("/employee/{id}")
@@ -41,7 +45,7 @@ public class EmployeeController {
     // To insert employee details
     		
     		@PostMapping("/employee/add")
-    		public Employee createEmployee(@RequestBody Employee newemp) {
+    		public Employee createEmployee(@Valid @RequestBody Employee newemp) {
         	return service.addNewEmployee(newemp);
     }
  
@@ -67,5 +71,49 @@ public class EmployeeController {
     		public void deleteAll() {
         	service.deleteAllEmployees();
     }
+    		
+    
+    // search via name
+    		
+    		@GetMapping("/getEmployeelike/{search}")
+    		public List<Employee> employeesearch(@PathVariable String search) {
+    			return service.searchEmployee(search);
+    		}
+    		
+    		
+    //Get male employees
+    		
+    		@GetMapping("/getMaleEmployee")
+    		public List<Employee> retrieveMaleemployees() {
+    		
+    			
+    		List<Employee> maleemployee	=service.getEmployees().stream()
+    									 .filter(emp-> emp.getGender().equals("male"))
+    								     .collect(Collectors.toList());
+    			System.out.println("Male Employee count " +maleemployee.size());
+    			return maleemployee; 
+    		}
+    		
+    		
+    //Get female employees
+    		
+    		@GetMapping("/getFemaleEmployee")
+    		public List<Employee> retrieveFemaleemployees() {
+    		
+    			
+    			List<Employee> femaleemployee	=service.getEmployees().stream()
+    											 .filter(emp-> emp.getGender().equals("female"))
+    											 .collect(Collectors.toList());
+    			System.out.println("Female Employee count "+femaleemployee.size());
+    			return femaleemployee; 
+    		}
+    		
+    		@DeleteMapping("/employeeemail/{email}")
+    		public void deletebyemail(@PathVariable String email) {
+
+    			service.deletebyemail(email);
+
+    		}
+    		
 }
 

@@ -1,11 +1,15 @@
 package com.employeeDetails.demo.model;
 
-import java.sql.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+
 
 @Entity
 @Table(name="employee_tbl")
@@ -13,19 +17,34 @@ public class Employee {
 	
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Integer empid;
 	
+	@NotEmpty
+	@NotNull(message = "firstname is mandatory")
 	private String firstname;
 	
+	@NotEmpty
+	@NotNull(message = "lastName is mandatory")
 	private String lastName;
 	
+	@NotEmpty
+	@NotNull(message = "gender is mandatory")
 	private String gender;
 	
+	@NotEmpty
+	@NotNull(message = "dob is mandatory")
 	private String dob;
 	
+	@NotEmpty
+	@NotNull(message = "phoneNo is mandatory")
 	private String phoneNo;
 
+	@NotEmpty
+	@Email
+	@NotNull(message = "emailId is mandatory")
+	private String email;
+	
 	public Integer getEmpid() {
 		return empid;
 	}
@@ -74,13 +93,20 @@ public class Employee {
 		this.phoneNo = phoneNo;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	@Override
 	public String toString() {
 		return "Employee [empid=" + empid + ", firstname=" + firstname + ", lastName=" + lastName + ", gender=" + gender
-				+ ", dob=" + dob + ", phoneNo=" + phoneNo + "]";
+				+ ", dob=" + dob + ", phoneNo=" + phoneNo + ", email=" + email + "]";
 	}
 
-	
 	
 	
 	

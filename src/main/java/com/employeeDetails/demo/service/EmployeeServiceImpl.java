@@ -2,14 +2,15 @@ package com.employeeDetails.demo.service;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.employeeDetails.demo.dao.EmployeeDao;
 import com.employeeDetails.demo.model.Employee;
 
 @Service
+@Transactional
 public class EmployeeServiceImpl implements EmployeeService{
 
 	@Autowired
@@ -53,8 +54,23 @@ public class EmployeeServiceImpl implements EmployeeService{
 		e.setLastName(emp.getLastName());
 		e.setGender(emp.getGender());
 		e.setPhoneNo(emp.getPhoneNo());
+		e.setEmail(emp.getEmail());
 		return dao.save(e);
 	
 	}
+
+	public List<Employee> searchEmployee(String search) {
+		List<Employee> e=dao.searchByName(search);
+		return e;
+	}
+
+	public void deletebyemail(String email) {
+		// TODO Auto-generated method stub
+		dao.deleteByEmail(email);
+	}
+	
+
+	
+	
 
 }
