@@ -108,6 +108,9 @@ public class EmployeeController {
     			return femaleemployee; 
     		}
     		
+    		
+    //To Delete employee by email
+    		
     		@DeleteMapping("/employeeemail/{email}")
     		public void deletebyemail(@PathVariable String email) {
 
